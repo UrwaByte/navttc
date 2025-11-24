@@ -1,5 +1,16 @@
-import shirt from "/image.png";
+import { useEffect,useState } from "react";
+import { getProducts, type GetProductsResponse } from "@/api/products";
+import type { IProduct } from "@/types";
 export default function Shop() {
+  const [products, setProducts] = useState<GetProductsResponse>({success:false,count:0,currentPage:0,totalPages:0,totalProducts:0,data:[]});
+  useEffect(() => {
+    (async()=>{
+      const products = await getProducts();
+      console.log("Products in Shop page:", products);
+      if(!products) return;
+      setProducts(products);
+    })();
+  }, []);
   return (
     <>
     <div className="flex gap-2 w-full bg-white py-8 px-8 text-gray-600 text-sm">
@@ -89,68 +100,9 @@ export default function Shop() {
         </div>
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6">
-            <div className="p-4 border rounded-xl">
-               <img className="w-full h-52 rounded-lg mb-3 " src={shirt} alt="shirt1" />
-              <h3 className="font-medium mb-1">Gradient Graphic T-shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐☆ (3.5)</p>
-              <p className="font-semibold">$145</p>
-            </div>
-
-             <div className="p-4 border rounded-xl ">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Polo With Tipping Details</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐☆ (4.5)</p>
-              <p className="font-semibold">$180</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Black Striped T-shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐⭐ (5.0/5)</p>
-              <p className="font-semibold">$120</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Sinny fit Jeans</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐☆ (3.5)</p>
-              <p className="font-semibold">$240</p>
-            </div>
-
-             <div className="p-4 border rounded-xl hover:shadow-md transition">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Checkered Shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐☆ (4.5)</p>
-              <p className="font-semibold">$180</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Sleeve Striped T-shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐☆ (4.5)</p>
-              <p className="font-semibold">$130</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Vertical Striped Shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐⭐ (5.0/5)</p>
-              <p className="font-semibold">$212</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Courage Graphic T-shirt</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐⭐ (4.0)</p>
-              <p className="font-semibold">$145</p>
-            </div>
-
-             <div className="p-4 border rounded-xl">
-              <div className="w-full h-52 bg-gray-200 rounded-lg mb-3"></div>
-              <h3 className="font-medium mb-1">Loose Fit Bermuda Shorts</h3>
-              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐ (3.0/5)</p>
-              <p className="font-semibold">$80</p>
-            </div>
+            {products && products.data && products.data.map((product: IProduct) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
         </div>
 
 
@@ -174,3 +126,14 @@ export default function Shop() {
     </>
   );
 } 
+
+function ProductCard({product}: {product: IProduct}) {
+  return(
+            <div className="p-4 border rounded-xl">
+               <img className="w-full h-52 rounded-lg mb-3 " src={product.thumbnail} alt="shirt1" />
+              <h3 className="font-medium mb-1">{product.title}</h3>
+              <p className="text-gray-500 text-sm mb-1">⭐⭐⭐☆ ({product.rating})</p>
+              <p className="font-semibold">${product.price}</p>
+            </div>
+  )
+}

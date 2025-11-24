@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import type { Product } from "@/types"
+import type { IProduct } from "@/types"
 import ProductTable from "./product-table"
 import AddProduct from "./add-product"
 
 export default function DashboardProducts() {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<IProduct[]>([])
   console.log("products",products)
   const [, setLoading] = useState(false)
   const [,setError] = useState<string | null>(null)

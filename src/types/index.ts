@@ -1,29 +1,31 @@
-export interface Product {
-  _id: string
-  title: string
-  slug: string
-  price: number
-  discount: number
-  description: string
-  brand: string
-  category: string
-  subCategory: string
-  tags: string[]
-  rating: number
-  numReviews: number
-  thumbnail: string
-  images: string[]
-  variants: {
-    color: string,
-    colorCode?: string,
-    size: string,
-    sku?: string,
-    stock: number
-  }[]
-  isFeatured: boolean
-  isActive: boolean
-  createdAt: string
-  updatedAt: string
-  finalPrice: number
-  totalStock: number
+export interface IVariant {
+  color: string;
+  colorCode?: string;
+  size: string;
+  sku?: string;
+  stock: number;
+}
+export interface IProduct {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  brand: string;
+  category: 'Men' | 'Women' | 'Kids' | 'Unisex'; // Union type for strictness
+  subCategory?: string;
+  tags?: string[];
+  thumbnail: string;
+  images?: string[];
+  variants: IVariant[];
+  rating: number;
+  numReviews: number;
+  isFeatured: boolean;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  // Virtuals definition (optional, for type hinting)
+  finalPrice: number;
+  totalStock: number;
 }
