@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Edit, Trash, Plus } from "lucide-react";
 
 export default function UsersPage() {
-  const [users, setUsers] = useState([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [users, setUsers] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize] = useState(5);

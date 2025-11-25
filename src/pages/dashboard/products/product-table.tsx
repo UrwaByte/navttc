@@ -6,10 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { Product } from "@/types"
+import type { IProduct } from "@/types"
 import DeleteProduct from "./delete-product"
 import EditProduct from "./edit-product"
-export default function ProductTable({paginatedProducts}:{paginatedProducts: Product[]}) {
+export default function ProductTable({paginatedProducts}:{paginatedProducts: IProduct[]}) {
   return(
       <div className="rounded-lg border">
         <Table>
