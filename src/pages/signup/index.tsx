@@ -5,9 +5,10 @@ export default function Signup() {
   const navigate = useNavigate();
   const handleSumbit = (e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
     // somehow grab the data
     const formData = new FormData(e.currentTarget);
-    fetch("http://localhost:3000/auth/signup",{
+    fetch(`${baseUrl}/auth/signup`,{
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

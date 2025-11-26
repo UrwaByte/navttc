@@ -2,10 +2,11 @@ import { useEffect } from "react"
 import profile from "@/assets/profile.svg"
 
 export default function Profile(){
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
   useEffect(()=>{
     const session = window.sessionStorage.getItem('session');
     if(!session){
-      fetch('http://localhost:3000/auth/session', {
+      fetch(`${baseUrl}/auth/session`, {
         method: 'GET',
         credentials: 'include',
       })

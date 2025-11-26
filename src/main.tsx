@@ -17,6 +17,7 @@ import Footer from './components/footer.tsx';
 import Product from './pages/product/index.tsx';
 import Dashboard from './pages/dashboard/index.tsx';
 import Users from './pages/dashboard/users/index.tsx';
+import DashboardProducts from './pages/dashboard/products/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         element: <Shop/>
       },
       {
-        path:"/product",
+        path:"/product/:slug",
         element: <Product/>
       },
         ]
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
           },
           {
             path: "products",
-            element: <div>Products</div>
+            element: <DashboardProducts/>
           },
           {
             path: "orders",

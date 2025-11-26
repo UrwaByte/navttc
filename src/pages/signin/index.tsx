@@ -6,11 +6,12 @@ export default function Signup() {
   const navigate = useNavigate();
   const handleSumbit = (e:FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email');
     const password = formData.get('password');
     if(!email || !password) return
-    fetch('http://localhost:3000/auth/signin', {
+    fetch(`${baseUrl}/auth/signin`, {
       method: 'POST',
       credentials: 'include',
       headers: {
