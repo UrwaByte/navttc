@@ -5,8 +5,19 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Edit, Trash, Plus } from "lucide-react";
 
+interface IUser {
+  id: string;
+  fullname: string;
+  email: string;
+  email_verified: boolean;
+  isVerified: boolean;
+  role: string;
+  isActive: boolean;
+  created: string;
+}
+
 export default function UsersPage() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize] = useState(5);
