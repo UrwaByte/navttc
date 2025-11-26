@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
+import { motion, time } from "framer-motion";
 import { ChevronLeft, ChevronRight, Edit, Trash, Plus } from "lucide-react";
 
 interface IUser {
-  id: string;
-  fullname: string;
+  _id: string,
   email: string;
-  email_verified: boolean;
-  isVerified: boolean;
-  role: string;
+  firstName: string;
+  lastName: string;
+  role: "user" | "admin" | "moderator";
+  emailVerified: boolean;
   isActive: boolean;
-  created: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function UsersPage() {
@@ -23,77 +24,19 @@ export default function UsersPage() {
   const [pageSize] = useState(5);
 
   // Fake data (replace with API when needed)
-  useEffect(() => {
-    const fakeData = [
-      {
-        id: "1",
-        fullname: "Amna",
-        email: "amna@example.com",
-        email_verified: true,
-        isVerified: true,
-        role: "admin",
-        isActive: true,
-        created: "2025-01-10",
-      },
-      {
-        id: "2",
-        fullname: "Urwa",
-        email: "urwa@example.com",
-        email_verified: false,
-        isVerified: false,
-        role: "user",
-        isActive: true,
-        created: "2025-01-11",
-      },
-      {
-        id: "3",
-        fullname: "Hina Khan",
-        email: "hina@example.com",
-        email_verified: true,
-        isVerified: true,
-        role: "user",
-        isActive: false,
-        created: "2025-01-09",
-      },
-      {
-        id: "4",
-        fullname: "John Doe",
-        email: "john@example.com",
-        email_verified: false,
-        isVerified: false,
-        role: "moderator",
-        isActive: true,
-        created: "2025-01-08",
-      },
-      {
-        id: "5",
-        fullname: "Sara Ahmed",
-        email: "sara@example.com",
-        email_verified: true,
-        isVerified: true,
-        role: "user",
-        isActive: true,
-        created: "2025-01-06",
-      },
-      {
-        id: "6",
-        fullname: "M Ali",
-        email: "mali@example.com",
-        email_verified: true,
-        isVerified: false,
-        role: "user",
-        isActive: true,
-        created: "2025-01-03",
-      },
-    ];
 
-    setUsers(fakeData);
+  useEffect(() => {
+    // call api
+
   }, []);
 
   // Search filter
   const filteredUsers = users.filter((u) =>
-    u.fullname.toLowerCase().includes(search.toLowerCase()) ||
+
+    u.firstName.toLowerCase().includes(search.toLowerCase()) ||
+    u.lastName.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase())
+
   );
 
   // Pagination
@@ -136,47 +79,52 @@ export default function UsersPage() {
             <table className="min-w-full text-sm">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-3">ID</th>
-                  <th className="p-3">Full Name</th>
+                  <th className="p-3">_ID</th>
+                  <th className="p-3">First_Name</th>
+                  <th className="p-3">Last_Name</th>
                   <th className="p-3">Email</th>
-                  <th className="p-3">Email Verified</th>
                   <th className="p-3">Verified</th>
                   <th className="p-3">Role</th>
-                  <th className="p-3">Active</th>
-                  <th className="p-3">Created</th>
-                  <th className="p-3">Actions</th>
+                  <th className="p-3">isActive</th>
+                  <th className="p-3">createdAt</th>
+                  <th className="p-3">updatedAt</th>
                 </tr>
               </thead>
 
               <tbody>
                 {paginatedData.map((u) => (
-                  <tr key={u.id} className="border-t">
-                    <td className="p-3">{u.id}</td>
-                    <td className="p-3">{u.fullname}</td>
+                  <tr key={u._id} className="border-t">
+                    <td className="p-3">{u._id}</td>
+                    <td className="p-3">{u.firstName}</td>
+                    <td className="p-3">{u.lastName}</td>
                     <td className="p-3">{u.email}</td>
                     <td className="p-3">
-                      {u.email_verified ? (
+                      {u.emailVerified ? (
                         <span className="text-green-600 font-medium">Yes</span>
                       ) : (
                         <span className="text-red-600 font-medium">No</span>
                       )}
                     </td>
+
                     <td className="p-3">
-                      {u.isVerified ? (
-                        <span className="text-green-600 font-medium">Verified</span>
-                      ) : (
-                        <span className="text-yellow-600 font-medium">Pending</span>
-                      )}
-                    </td>
-                    <td className="p-3">{u.role}</td>
+                      {u.role
+                        ? <span>user</span>
+                        : u.role
+                          ? <span>admin</span>
+                          : <span>moderator</span>
+                      }</td>
+
+
                     <td className="p-3">
                       {u.isActive ? (
-                        <span className="text-green-500">Active</span>
+                        <span className="text-green-500">active</span>
                       ) : (
-                        <span className="text-gray-500">Inactive</span>
+                        <span className="text-gray-500">inactive</span>
                       )}
                     </td>
-                    <td className="p-3">{u.created}</td>
+                    <td className="p-3">{u.createdAt}</td>
+                    <td className="p-3">{u.updatedAt}</td>
+
 
                     <td className="p-3 flex gap-3">
                       <Button
